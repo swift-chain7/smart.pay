@@ -78,10 +78,24 @@
                         <div class="bg-binance-10 text-yellow-300 px-4 py-1.5 rounded-full w-fit border border-binance text-[10px] font-black uppercase tracking-widest">Ativos</div>
                         <h1 class="text-6xl sm:text-7xl font-black tracking-tighter glow">54,440.88 <span class="text-2xl text-zinc-600 font-normal">USD</span></h1>
                     </div>
-                    TradingView Widget BEGIN -->
+                    <!-- TradingView Widget BEGIN -->
 <div class="tradingview-widget-container">
   <div class="tradingview-widget-container__widget"></div>
   <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/" rel="noopener nofollow" target="_blank"><span class="blue-text">Crypto markets</span></a><span class="trademark"> by TradingView</span></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+  {
+  "defaultColumn": "overview",
+  "screener_type": "crypto_mkt",
+  "displayCurrency": "USD",
+  "colorTheme": "light",
+  "isTransparent": false,
+  "locale": "en",
+  "width": "100%",
+  "height": 550
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
                     <button onclick="openModal()" class="bg-binance hover:bg-[#f0b90b] text-black font-black py-8 px-12 rounded-[2rem] text-xl shadow-binance flex items-center transition-all transform hover:scale-105 active:scale-95">
                         <i data-lucide="wallet" class="mr-3 w-6 h-6"></i> Solicitar Saque
                     </button>
@@ -181,17 +195,5 @@
         }
     </script>
     <script src="https://www.cryptohopper.com/widgets/js/script"></script>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
-  {
-  "defaultColumn": "overview",
-  "screener_type": "crypto_mkt",
-  "displayCurrency": "USD",
-  "colorTheme": "light",
-  "isTransparent": false,
-  "locale": "en",
-  "width": "100%",
-  "height": 550
-}
-      </script>
 </body>
 </html>
